@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col">
-    <form (ngSubmit)="save(myForm)" #myForm="ngForm" autocomplete="off">
+    <form (ngSubmit)="save()" #myForm="ngForm" autocomplete="off">
       <!-- Product part -->
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Product</label>
@@ -13,10 +13,13 @@
             class="form-control"
             placeholder="Product name"
             name="product"
-            ngModel
+            [ngModel]="initForm.product"
             required
+            minlength="3"
           />
-          <span class="form-text text-danger">Must be 3 letters</span>
+          <span class="form-text text-danger" *ngIf="validName()"
+            >Must be 3 letters</span
+          >
         </div>
       </div>
       <!-- Price part -->
@@ -28,10 +31,13 @@
             class="form-control"
             placeholder="Product price"
             name="price"
-            ngModel
+            [ngModel]="initForm.price"
             required
             min="0"
           />
+          <span class="form-text text-danger" *ngIf="validPrice()"
+            >Price must be between 0 and higher</span
+          >
         </div>
       </div>
       <!-- Stock part -->
@@ -43,14 +49,20 @@
             class="form-control"
             placeholder="Product stock"
             name="stock"
-            ngModel
+            [ngModel]="initForm.stock"
           />
         </div>
       </div>
 
       <div class="row">
         <div class="col">
-          <button type="submit" class="btn btn-primary float-end">Save</button>
+          <button
+            type="submit"
+            class="btn btn-primary float-end"
+            [disabled]="myForm.invalid"
+          >
+            Save
+          </button>
         </div>
       </div>
     </form>
@@ -61,6 +73,10 @@
   <div class="col">
     <span>Valid</span>
     <pre>{{ myForm.valid }}</pre>
+    <span>Pristine</span>
+    <pre>{{ myForm.pristine }}</pre>
+    <span>Touched</span>
+    <pre>{{ myForm.touched }}</pre>
 
     <span>Value</span>
     <pre>{{ myForm.value | json }}</pre>
