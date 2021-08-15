@@ -3,14 +3,12 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-dynamic',
   templateUrl: './dynamic.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class DynamicComponent implements OnInit {
+  a: any;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
