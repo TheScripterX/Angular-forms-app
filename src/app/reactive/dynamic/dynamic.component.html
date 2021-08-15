@@ -1,12 +1,19 @@
 <h2>Reactive: Dynamic</h2>
 <hr />
-<form autocomplete="off">
+<form autocomplete="off" [formGroup]="myForm" (ngSubmit)="save()">
   <!-- Name Part -->
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label">Name</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" placeholder="Person name" />
-      <span class="text-danger">Required field</span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Person name"
+        formControlName="name"
+      />
+      <span class="text-danger" *ngIf="isValid('name')"
+        >* Minimum 3 characters</span
+      >
     </div>
   </div>
 
@@ -19,9 +26,14 @@
           type="text"
           class="form-control"
           placeholder="Add favorite"
-          (keyup.enter)="a = 1"
+          [formControl]="newGame"
+          (keyup.enter)="addGame()"
         />
-        <button class="btn btn-outline-primary" type="button" (click)="a = 1">
+        <button
+          class="btn btn-outline-primary"
+          type="button"
+          (click)="addGame()"
+        >
           Add
         </button>
       </div>
@@ -32,35 +44,42 @@
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label">Favorites</label>
 
-    <div class="col-sm-9">
-      <!-- <div
+    <div class="col-sm-9" formArrayName="favorites">
+      <div
         class="input-group mb-1"
-        *ngFor="let game of person.favorites; let i = index"
+        *ngFor="let game of favoritesArray.controls; let i = index"
       >
-        <input
-          type="text"
-          class="form-control"
-          
-        />
+        <input type="text" class="form-control" [formControlName]="i" />
         <button
           type="button"
           class="btn btn-outline-danger"
-          (click)="a=1"
+          (click)="deleteGame(i)"
         >
           Delete
         </button>
-      </div> -->
+      </div>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-12">
-      <button type="button" class="btn btn-primary float-end" (click)="a = 1">
+      <button type="submit" class="btn btn-primary float-end" (click)="save()">
         Save
       </button>
     </div>
   </div>
 </form>
 
-<!-- <span>Person</span>
-<pre>{{ person | json }}</pre> -->
+<span>Valid</span>
+<pre>{{ myForm.valid | json }}</pre>
+<br />
+
+<span>Value</span>
+<pre>{{ myForm.value | json }}</pre>
+<br />
+
+<span>Add game</span>
+<pre>{{ newGame.valid }}</pre>
+<br />
+
+<pre>{{ newGame.value }}</pre>
