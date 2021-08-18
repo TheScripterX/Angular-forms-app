@@ -29,9 +29,9 @@
             placeholder="Enter your Email"
             formControlName="email"
           />
-          <span class="form-text text-danger" *ngIf="isInvalid('email')"
-            >Email required</span
-          >
+          <span class="form-text text-danger" *ngIf="isInvalid('email')">{{
+            errorEmailMessage
+          }}</span>
         </div>
       </div>
       <!-- Username -->
@@ -98,6 +98,9 @@
 
 <span>Form Valid</span>
 <pre>{{ myForm.valid }}</pre>
+<br />
+<span>Form Status</span>
+<pre>{{ myForm.status }}</pre>
 <br />
 <span>Form Errors</span>
 <pre>{{ myForm.errors | json }}</pre>
