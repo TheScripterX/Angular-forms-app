@@ -35,7 +35,15 @@
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Username</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" placeholder="Username" />
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Username"
+            formControlName="username"
+          />
+          <span class="form-text text-danger" *ngIf="isInvalid('username')"
+            >Username cant be "naruto"</span
+          >
         </div>
       </div>
       <!-- Password -->
@@ -79,3 +87,7 @@
 <br />
 <span>Email</span>
 <pre>{{ myForm.controls.email.errors | json }}</pre>
+<br />
+<span>Username</span>
+<pre>{{ myForm.controls.username.errors | json }}</pre>
+<br />

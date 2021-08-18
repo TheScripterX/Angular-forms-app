@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -12,11 +17,22 @@ export class RegisterComponent implements OnInit {
   fullNamePattern: string = '([a-zA-Z]+) ([a-zA-Z]+)';
   emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
+  cantBeNaruto(control: FormControl) {
+    const value = control.value?.trim().toLowerCase();
+    if (value === 'naruto') {
+      return {
+        noNaruto: true,
+      };
+    }
+    return null;
+  }
+
   // Temporary code --End
 
   myForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(this.fullNamePattern)]],
     email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+    username: ['', [Validators.required, this.cantBeNaruto]],
   });
 
   constructor(private fb: FormBuilder) {}
@@ -25,6 +41,7 @@ export class RegisterComponent implements OnInit {
     this.myForm.reset({
       name: 'Wassim Hamdoun',
       email: 'test1@gmail.com',
+      username: 'hasimdev',
     });
   }
 
