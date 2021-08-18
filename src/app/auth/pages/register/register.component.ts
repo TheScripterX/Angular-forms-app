@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+//
+import { ValidatorService } from 'src/app/shared/validator/validator.service';
 
 @Component({
   selector: 'app-register',
@@ -12,36 +9,25 @@ import {
   styles: [],
 })
 export class RegisterComponent implements OnInit {
-  // Temporary code --Start
-
-  fullNamePattern: string = '([a-zA-Z]+) ([a-zA-Z]+)';
-  emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
-
-  cantBeNaruto(control: FormControl) {
-    const value = control.value?.trim().toLowerCase();
-    if (value === 'naruto') {
-      return {
-        noNaruto: true,
-      };
-    }
-    return null;
-  }
-
-  // Temporary code --End
-
   myForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required, Validators.pattern(this.fullNamePattern)]],
-    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    username: ['', [Validators.required, this.cantBeNaruto]],
+    name: [
+      '',
+      [Validators.required, Validators.pattern(this.validator.fullNamePattern)],
+    ],
+    email: [
+      '',
+      [Validators.required, Validators.pattern(this.validator.emailPattern)],
+    ],
+    username: ['', [Validators.required, this.validator.cantBeNaruto]],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private validator: ValidatorService) {}
 
   ngOnInit(): void {
     this.myForm.reset({
-      name: 'Wassim Hamdoun',
-      email: 'test1@gmail.com',
-      username: 'hasimdev',
+      name: '',
+      email: '',
+      username: '',
     });
   }
 
