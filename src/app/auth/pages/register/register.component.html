@@ -53,7 +53,15 @@
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Password</label>
         <div class="col-sm-9">
-          <input type="password" class="form-control" placeholder="Password" />
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            formControlName="password"
+          />
+          <span class="form-text text-danger" *ngIf="isInvalid('password')"
+            >Password must be at least 6 characters</span
+          >
         </div>
       </div>
       <!-- Password confirmation -->
@@ -64,7 +72,13 @@
             type="password"
             class="form-control"
             placeholder="Confirm your password"
+            formControlName="confirmPassword"
           />
+          <span
+            class="form-text text-danger"
+            *ngIf="isInvalid('confirmPassword')"
+            >No match password</span
+          >
         </div>
       </div>
       <div class="row">
@@ -84,6 +98,10 @@
 
 <span>Form Valid</span>
 <pre>{{ myForm.valid }}</pre>
+<br />
+<span>Form Errors</span>
+<pre>{{ myForm.errors | json }}</pre>
+<br />
 
 <span>Name</span>
 <pre>{{ myForm.controls.name.errors | json }}</pre>
@@ -93,4 +111,10 @@
 <br />
 <span>Username</span>
 <pre>{{ myForm.controls.username.errors | json }}</pre>
+<br />
+<span>Password</span>
+<pre>{{ myForm.controls.password.errors | json }}</pre>
+<br />
+<span>Confirm Password</span>
+<pre>{{ myForm.controls.confirmPassword.errors | json }}</pre>
 <br />

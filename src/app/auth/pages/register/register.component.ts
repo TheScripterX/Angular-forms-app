@@ -9,17 +9,25 @@ import { ValidatorService } from 'src/app/shared/validator/validator.service';
   styles: [],
 })
 export class RegisterComponent implements OnInit {
-  myForm: FormGroup = this.fb.group({
-    name: [
-      '',
-      [Validators.required, Validators.pattern(this.validator.fullNamePattern)],
-    ],
-    email: [
-      '',
-      [Validators.required, Validators.pattern(this.validator.emailPattern)],
-    ],
-    username: ['', [Validators.required, this.validator.cantBeNaruto]],
-  });
+  myForm: FormGroup = this.fb.group(
+    {
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(this.validator.fullNamePattern),
+        ],
+      ],
+      email: [
+        '',
+        [Validators.required, Validators.pattern(this.validator.emailPattern)],
+      ],
+      username: ['', [Validators.required, this.validator.cantBeNaruto]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required]],
+    },
+    { validators: [this.validator.mustMatch('password', 'confirmPassword')] }
+  );
 
   constructor(private fb: FormBuilder, private validator: ValidatorService) {}
 
